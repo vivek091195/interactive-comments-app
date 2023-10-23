@@ -1,0 +1,14 @@
+.upvote-wrapper {
+  padding: 5px 12px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.count {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
