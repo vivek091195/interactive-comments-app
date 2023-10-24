@@ -50,6 +50,10 @@
   font-size: 16px;
 }
 
+.comment-content span {
+  font-weight: 500;
+}
+
 .add-comment-card-wrapper {
   display: flex;
   width: 100%;
@@ -78,7 +82,11 @@
   color: #fff;
 }
 
+.nested-comments {
+  display: flex;
+}
+
 .comment-spacer {
-  width: 100px;
+  width: 150px;
   height: 100%;
 }
