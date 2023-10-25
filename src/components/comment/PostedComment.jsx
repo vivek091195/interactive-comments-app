@@ -9,7 +9,7 @@ import "./Comment.css";
 import { Avatar } from "./Avatar";
 
 const PostedComment = ({
-  actionHandler,
+  id,
   content,
   createdAt,
   score,
@@ -18,10 +18,11 @@ const PostedComment = ({
   postedByMe,
   replyingTo,
   replies,
+  voteClickHandler,
 }) => {
   return (
     <>
-      <Vote actionHandler={actionHandler} score={score} />
+      <Vote id={id} score={score} voteClickHandler={voteClickHandler} />
       <div className="comments-section">
         <div className="comment-details">
           <div className="comment-details-left">
@@ -72,6 +73,7 @@ const PostedComment = ({
 };
 
 PostedComment.propTypes = {
+  id: PropTypes.number,
   actionHandler: PropTypes.func,
   content: PropTypes.string,
   createdAt: PropTypes.string,

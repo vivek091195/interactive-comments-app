@@ -1,7 +1,7 @@
 import "./App.css";
 import { COLORS } from "./typography/colors";
 import Data from "./data/comments.json";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { LoadComments } from "./components/comment/LoadComments";
 import { AddComment } from "./components/comment/AddComment";
 import { USER_STORAGE_KEY, COMMENTS_STORAGE_KEY } from "./utils/constants";
@@ -17,6 +17,46 @@ function App() {
     avatar: "",
   });
   const [comments, setComments] = useState([]);
+
+  const voteClickHandlerCallback = (voteCount, commentId) => {
+    function updateCommentScore(comments) {
+      for (let i = 0; i < comments.length; i++) {
+        if (comments[i].id === commentId) {
+          comments[i].score = voteCount;
+          break;
+        }
+        if (comments[i]?.replies?.length) {
+          updateCommentScore(comments[i].replies);
+        }
+      }
+    }
+
+    updateCommentScore(comments);
+    setComments(comments);
+    setValueInLS(COMMENTS_STORAGE_KEY, JSON.stringify(comments));
+  };
+
+  const sendBtnClickHandlerCallback = (addedComment) => {
+    const updatedComments = [
+      ...comments,
+      {
+        id: 1,
+        content: addedComment,
+        createdAt: "1 month ago",
+        score: 0,
+        user: {
+          image: {
+            png: currentUser.avatar,
+          },
+          username: currentUser.username,
+        },
+        replies: [],
+      },
+    ];
+
+    setComments(updatedComments);
+    setValueInLS(COMMENTS_STORAGE_KEY, JSON.stringify(updatedComments));
+  };
 
   useEffect(() => {
     const fetchData = () => {
@@ -44,33 +84,15 @@ function App() {
     fetchData();
   }, []);
 
-  const sendBtnClickHandlerCallback = (addedComment) => {
-    const updatedComments = [
-      ...comments,
-      {
-        id: 1,
-        content: addedComment,
-        createdAt: "1 month ago",
-        score: 0,
-        user: {
-          image: {
-            png: currentUser.avatar,
-          },
-          username: currentUser.username,
-        },
-        replies: [],
-      },
-    ];
-
-    setComments(updatedComments);
-    setValueInLS(COMMENTS_STORAGE_KEY, JSON.stringify(updatedComments));
-  };
-
   return (
     <div className="App" style={{ backgroundColor: COLORS.VERY_LIGHT_GRAY }}>
       <div className="viewing-area">
         {comments.length && (
-          <LoadComments currentUser={currentUser} comments={comments} />
+          <LoadComments
+            currentUser={currentUser}
+            comments={comments}
+            voteClickHandlerCallback={voteClickHandlerCallback}
+          />
         )}
         <AddComment actionHandler={sendBtnClickHandlerCallback} />
       </div>

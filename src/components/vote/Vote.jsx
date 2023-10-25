@@ -5,26 +5,37 @@ import { ReactComponent as MinusSvg } from "../../assets/icons/minus.svg";
 import "./Vote.css";
 import { COLORS } from "../../typography/colors";
 
-const Vote = ({ score }) => {
+const Vote = ({ id, score, voteClickHandler }) => {
   const [vote, setVote] = useState(score);
+
+  const upVoteHandler = () => {
+    setVote((prevCount) => {
+      const updatedCount = prevCount + 1;
+      voteClickHandler(updatedCount, id);
+      return updatedCount;
+    });
+  };
+
+  const downVoteHandler = () => {
+    setVote((prevCount) => {
+      const updatedCount = prevCount - 1;
+      voteClickHandler(updatedCount, id);
+      return updatedCount;
+    });
+  };
+
   return (
     <div
       className="upvote-wrapper"
       style={{ backgroundColor: COLORS.VERY_LIGHT_GRAY }}
     >
-      <div
-        className="icon upvote"
-        onClick={() => setVote((prevVote) => prevVote + 1)}
-      >
+      <div className="icon upvote" onClick={upVoteHandler}>
         <PlusSvg />
       </div>
       <div className="count" style={{ color: COLORS.MODERATE_BLUE }}>
         {vote}
       </div>
-      <div
-        className="icon downvote"
-        onClick={() => setVote((prevVote) => prevVote - 1)}
-      >
+      <div className="icon downvote" onClick={downVoteHandler}>
         <MinusSvg />
       </div>
     </div>

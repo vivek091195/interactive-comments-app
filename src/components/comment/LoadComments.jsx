@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import { Card } from "../card/Card";
 import { PostedComment } from "../comment/PostedComment";
 import { CommentSpacer } from "../comment/CommentSpacer";
+import { setValueInLS } from "../../utils/helperMethods";
+import { COMMENTS_STORAGE_KEY } from "../../utils/constants";
 
-const LoadComments = ({ currentUser, comments }) => {
+const LoadComments = ({ currentUser, comments, voteClickHandlerCallback }) => {
   const { avatar, username } = currentUser;
-  comments.sort((comment1, comment2) => comment2.score - comment1.score);
 
+  comments.sort((comment1, comment2) => comment2.score - comment1.score);
   return comments.map((comment) => {
     const {
       id,
@@ -22,6 +24,7 @@ const LoadComments = ({ currentUser, comments }) => {
     renderJSX.push(
       <Card key={id}>
         <PostedComment
+          id={id}
           postedByMe={username === user.username}
           content={content}
           createdAt={createdAt}
@@ -30,6 +33,7 @@ const LoadComments = ({ currentUser, comments }) => {
           replyingTo={replyingTo}
           avatar={require(`../../assets/avatars/image-juliusomo.png`)}
           replies={replies}
+          voteClickHandler={voteClickHandlerCallback}
         />
       </Card>
     );
@@ -39,7 +43,11 @@ const LoadComments = ({ currentUser, comments }) => {
         <div className="nested-comments">
           <CommentSpacer />
           <div>
-            <LoadComments currentUser={currentUser} comments={replies} />
+            <LoadComments
+              currentUser={currentUser}
+              comments={replies}
+              voteClickHandlerCallback={voteClickHandlerCallback}
+            />
           </div>
         </div>
       );
