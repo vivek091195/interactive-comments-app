@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 import { Card } from "../card/Card";
 import { PostedComment } from "../comment/PostedComment";
 import { CommentSpacer } from "../comment/CommentSpacer";
-import { setValueInLS } from "../../utils/helperMethods";
-import { COMMENTS_STORAGE_KEY } from "../../utils/constants";
 
 const LoadComments = ({ currentUser, comments, voteClickHandlerCallback }) => {
   const { avatar, username } = currentUser;
-
-  comments.sort((comment1, comment2) => comment2.score - comment1.score);
   return comments.map((comment) => {
     const {
       id,
