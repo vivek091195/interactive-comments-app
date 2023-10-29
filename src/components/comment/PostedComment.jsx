@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Vote } from "../vote/Vote";
 import { COLORS } from "../../typography/colors";
@@ -7,29 +7,52 @@ import { ReactComponent as EditSvg } from "../../assets/icons/edit.svg";
 import { ReactComponent as DeleteSvg } from "../../assets/icons/delete.svg";
 import "./Comment.css";
 import { Avatar } from "./Avatar";
+import { AddComment } from "./AddComment";
 
 const PostedComment = ({
-  id,
-  content,
-  createdAt,
-  score,
-  username,
+  comment,
   avatar,
   postedByMe,
-  replyingTo,
-  replies,
-  voteClickHandler,
+  editComment,
+  deleteComment,
+  updateCommentCount,
+  sendBtnClickHandlerCallback,
 }) => {
+  const [isEditActive, setIsEditActive] = useState(false);
+  const { id, content, createdAt, score, user, replyingTo } = comment;
+
+  const commentSaveHandler = (content, id) => {
+    setIsEditActive(false);
+    editComment(content, id);
+  };
+
+  const _renderCommentContent = () => {
+    return isEditActive ? (
+      <AddComment
+        id={id}
+        content={content}
+        actionHandler={commentSaveHandler}
+      />
+    ) : (
+      <div className="comment-content" style={{ color: COLORS.GRAYISH_BLUE }}>
+        <span style={{ color: COLORS.MODERATE_BLUE }}>
+          {replyingTo && `@${replyingTo} `}
+        </span>
+        {content}
+      </div>
+    );
+  };
+
   return (
     <>
-      <Vote id={id} score={score} voteClickHandler={voteClickHandler} />
+      <Vote id={id} score={score} updateCommentCount={updateCommentCount} />
       <div className="comments-section">
         <div className="comment-details">
           <div className="comment-details-left">
             <div className="comment-detail image">
               <Avatar src={avatar} alt="Author-avatar" />
             </div>
-            <div className="comment-detail name">{username}</div>
+            <div className="comment-detail name">{user.username}</div>
             {postedByMe && (
               <div
                 className="self-tag"
@@ -48,10 +71,14 @@ const PostedComment = ({
           <div className="comment-details-right">
             {postedByMe ? (
               <>
-                <EditSvg />
-                <span style={{ color: COLORS.MODERATE_BLUE }}>Edit</span>
-                <DeleteSvg />
-                <span style={{ color: COLORS.SOFT_RED }}>Delete</span>
+                <div onClick={() => setIsEditActive(true)}>
+                  <EditSvg />
+                  <span style={{ color: COLORS.MODERATE_BLUE }}>Edit</span>
+                </div>
+                <div onClick={() => deleteComment(id)}>
+                  <DeleteSvg />
+                  <span style={{ color: COLORS.SOFT_RED }}>Delete</span>
+                </div>
               </>
             ) : (
               <>
@@ -61,28 +88,19 @@ const PostedComment = ({
             )}
           </div>
         </div>
-        <div className="comment-content" style={{ color: COLORS.GRAYISH_BLUE }}>
-          <span style={{ color: COLORS.MODERATE_BLUE }}>
-            {replyingTo && `@${replyingTo} `}
-          </span>
-          {content}
-        </div>
+        {_renderCommentContent()}
       </div>
     </>
   );
 };
 
 PostedComment.propTypes = {
-  id: PropTypes.number,
-  actionHandler: PropTypes.func,
-  content: PropTypes.string,
-  createdAt: PropTypes.string,
-  score: PropTypes.number,
-  username: PropTypes.string,
+  comment: PropTypes.array,
   avatar: PropTypes.string,
   postedByMe: PropTypes.bool,
-  replies: PropTypes.array,
-  replyingTo: PropTypes.string,
+  editComment: PropTypes.func,
+  deleteComment: PropTypes.func,
+  updateCommentCount: PropTypes.func,
 };
 
 PropTypes.defaultProps = {

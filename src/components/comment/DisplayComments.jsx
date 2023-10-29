@@ -10,20 +10,27 @@ const DisplayComments = () => {
   const {
     comments,
     currentUser,
-    voteClickHandlerCallback,
     sendBtnClickHandlerCallback,
+    editComment,
+    deleteComment,
+    updateCommentCount,
   } = appContext || {};
+
   return (
     <div className="App" style={{ backgroundColor: COLORS.VERY_LIGHT_GRAY }}>
       <div className="viewing-area">
-        {comments.length && (
-          <LoadComments
-            currentUser={currentUser}
-            comments={comments}
-            voteClickHandlerCallback={voteClickHandlerCallback}
-          />
-        )}
-        <AddComment actionHandler={sendBtnClickHandlerCallback} />
+        <LoadComments
+          currentUser={currentUser}
+          comments={comments}
+          editComment={editComment}
+          deleteComment={deleteComment}
+          updateCommentCount={updateCommentCount}
+          sendBtnClickHandlerCallback={sendBtnClickHandlerCallback}
+        />
+        <AddComment
+          showAvatar={true}
+          actionHandler={sendBtnClickHandlerCallback}
+        />
       </div>
     </div>
   );

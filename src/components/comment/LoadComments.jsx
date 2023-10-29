@@ -4,32 +4,28 @@ import { Card } from "../card/Card";
 import { PostedComment } from "../comment/PostedComment";
 import { CommentSpacer } from "../comment/CommentSpacer";
 
-const LoadComments = ({ currentUser, comments, voteClickHandlerCallback }) => {
+const LoadComments = ({
+  currentUser,
+  comments,
+  editComment,
+  deleteComment,
+  updateCommentCount,
+  sendBtnClickHandlerCallback,
+}) => {
   const { avatar, username } = currentUser;
   return comments.map((comment) => {
-    const {
-      id,
-      content,
-      createdAt,
-      score,
-      user,
-      replyingTo,
-      replies = [],
-    } = comment;
+    const { user, replies = [] } = comment;
     let renderJSX = [];
     renderJSX.push(
-      <Card key={id}>
+      <Card>
         <PostedComment
-          id={id}
+          comment={comment}
           postedByMe={username === user.username}
-          content={content}
-          createdAt={createdAt}
-          score={score}
-          username={user.username}
-          replyingTo={replyingTo}
           avatar={require(`../../assets/avatars/image-juliusomo.png`)}
-          replies={replies}
-          voteClickHandler={voteClickHandlerCallback}
+          editComment={editComment}
+          deleteComment={deleteComment}
+          updateCommentCount={updateCommentCount}
+          sendBtnClickHandlerCallback={sendBtnClickHandlerCallback}
         />
       </Card>
     );
@@ -42,7 +38,8 @@ const LoadComments = ({ currentUser, comments, voteClickHandlerCallback }) => {
             <LoadComments
               currentUser={currentUser}
               comments={replies}
-              voteClickHandlerCallback={voteClickHandlerCallback}
+              deleteComment={deleteComment}
+              updateCommentCount={updateCommentCount}
             />
           </div>
         </div>
@@ -55,6 +52,10 @@ const LoadComments = ({ currentUser, comments, voteClickHandlerCallback }) => {
 LoadComments.propTypes = {
   currentUser: PropTypes.object,
   comments: PropTypes.array,
+  editComment: PropTypes.func,
+  deleteComment: PropTypes.func,
+  updateCommentCount: PropTypes.func,
+  sendBtnClickHandlerCallback: PropTypes.func,
 };
 
 LoadComments.defaultProps = {
