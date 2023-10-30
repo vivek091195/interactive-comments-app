@@ -52,18 +52,18 @@ const useApp = () => {
     }
   };
 
-  const updateCommentCount = (id, count) => {
+  const updateCommentCountHandler = (id, count) => {
     const comment = getCommentById(comments, id);
     comment.score = count;
     sortAndStoreComments([...comments]);
   };
 
-  const deleteComment = (id) => {
+  const deleteCommentHandler = (id) => {
     getCommentById(comments, id, true);
     sortAndStoreComments([...comments]);
   };
 
-  const editComment = (content, id) => {
+  const editCommentHandler = (content, id) => {
     setIsEditActive(false);
     const comment = getCommentById(comments, id);
     comment.content = content;
@@ -78,7 +78,7 @@ const useApp = () => {
     return randomId;
   };
 
-  const sendBtnClickHandlerCallback = (addedComment) => {
+  const postCommentHandler = (addedComment) => {
     const updatedComments = [
       ...comments,
       {
@@ -132,10 +132,10 @@ const useApp = () => {
       setComments,
       currentUser,
       setCurrentUser,
-      updateCommentCount,
-      deleteComment,
-      editComment,
-      sendBtnClickHandlerCallback,
+      updateCommentCountHandler,
+      deleteCommentHandler,
+      editCommentHandler,
+      postCommentHandler,
       isEditActive,
       setIsEditActive,
     },

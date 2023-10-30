@@ -2,40 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ReactComponent as PlusSvg } from "../../assets/icons/plus.svg";
 import { ReactComponent as MinusSvg } from "../../assets/icons/minus.svg";
-import "./Vote.css";
-import { COLORS } from "../../typography/colors";
+import { Icon, Score, VoteWrapper } from "./Vote.style";
 
-const Vote = ({ id, score, updateCommentCount }) => {
+const Vote = ({ id, score, updateCommentCountHandler }) => {
   const upVoteHandler = () => {
-    updateCommentCount(id, score + 1);
+    updateCommentCountHandler(id, score + 1);
   };
 
   const downVoteHandler = () => {
-    updateCommentCount(id, score - 1);
+    updateCommentCountHandler(id, score - 1);
   };
 
   return (
-    <div
-      className="upvote-wrapper"
-      style={{ backgroundColor: COLORS.VERY_LIGHT_GRAY }}
-    >
-      <div className="icon upvote" onClick={upVoteHandler}>
+    <VoteWrapper>
+      <Icon onClick={upVoteHandler}>
         <PlusSvg />
-      </div>
-      <div className="count" style={{ color: COLORS.MODERATE_BLUE }}>
-        {score}
-      </div>
-      <div className="icon downvote" onClick={downVoteHandler}>
+      </Icon>
+      <Score>{score}</Score>
+      <Icon onClick={downVoteHandler}>
         <MinusSvg />
-      </div>
-    </div>
+      </Icon>
+    </VoteWrapper>
   );
 };
 
 Vote.propTypes = {
   id: PropTypes.number,
   score: PropTypes.number,
-  updateCommentCount: PropTypes.func,
+  updateCommentCountHandler: PropTypes.func,
 };
 
 Vote.defaultProps = {

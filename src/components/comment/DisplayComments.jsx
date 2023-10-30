@@ -1,38 +1,34 @@
 import React from "react";
-import "../../App.css";
-import { LoadComments } from "./LoadComments";
+import { Comments } from "./Comments";
 import { AddComment } from "./AddComment";
 import { useAppContext } from "../../hooks/useApp";
-import { COLORS } from "../../typography/colors";
+import { DisplayCommentsWrapper, DisplayWindow } from "./Comments.style";
 
 const DisplayComments = () => {
   const { appContext } = useAppContext();
   const {
     comments,
     currentUser,
-    sendBtnClickHandlerCallback,
-    editComment,
-    deleteComment,
-    updateCommentCount,
+    postCommentHandler,
+    editCommentHandler,
+    deleteCommentHandler,
+    updateCommentCountHandler,
   } = appContext || {};
 
   return (
-    <div className="App" style={{ backgroundColor: COLORS.VERY_LIGHT_GRAY }}>
-      <div className="viewing-area">
-        <LoadComments
+    <DisplayCommentsWrapper>
+      <DisplayWindow>
+        <Comments
           currentUser={currentUser}
           comments={comments}
-          editComment={editComment}
-          deleteComment={deleteComment}
-          updateCommentCount={updateCommentCount}
-          sendBtnClickHandlerCallback={sendBtnClickHandlerCallback}
+          editCommentHandler={editCommentHandler}
+          deleteCommentHandler={deleteCommentHandler}
+          updateCommentCountHandler={updateCommentCountHandler}
+          postCommentHandler={postCommentHandler}
         />
-        <AddComment
-          showAvatar={true}
-          actionHandler={sendBtnClickHandlerCallback}
-        />
-      </div>
-    </div>
+        <AddComment showAvatar={true} actionHandler={postCommentHandler} />
+      </DisplayWindow>
+    </DisplayCommentsWrapper>
   );
 };
 

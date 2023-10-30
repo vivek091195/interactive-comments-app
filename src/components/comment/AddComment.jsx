@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { Avatar } from "./Avatar";
 import { COLORS } from "../../typography/colors";
 import { Card } from "../card/Card";
+import {
+  AddCommentTextArea,
+  AddCommentWrapper,
+  SendButton,
+} from "./Comments.style";
 
 const AddComment = ({
   id,
@@ -21,7 +26,7 @@ const AddComment = ({
 
   return (
     <Card>
-      <div className="add-comment-card-wrapper">
+      <AddCommentWrapper>
         {showAvatar && (
           <Avatar
             src={require("../../assets/avatars/image-amyrobson.png")}
@@ -30,24 +35,17 @@ const AddComment = ({
             width={35}
           />
         )}
-        <textarea
+        <AddCommentTextArea
           id="add-comment-textarea"
           name="add-comment"
           rows="4"
           cols="50"
-          style={{ borderColor: COLORS.LIGHT_GRAY, color: COLORS.GRAYISH_BLUE }}
           value={comment}
           onChange={onCommentChangeHandler}
           placeholder="Add a comment..."
-        ></textarea>
-        <button
-          className="send-button"
-          style={{ backgroundColor: COLORS.MODERATE_BLUE }}
-          onClick={sendBtnClickHandler}
-        >
-          Send
-        </button>
-      </div>
+        ></AddCommentTextArea>
+        <SendButton onClick={sendBtnClickHandler}>Send</SendButton>
+      </AddCommentWrapper>
     </Card>
   );
 };

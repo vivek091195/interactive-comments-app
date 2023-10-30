@@ -1,8 +1,8 @@
 import React from "react";
-import "./Card.css";
+import { CardWrapper } from "./Card.style";
 
 const Card = ({ children }) => {
-  return <div className="card-wrapper">{children}</div>;
+  return <CardWrapper>{children}</CardWrapper>;
 };
 
 export { Card };
