@@ -7,6 +7,7 @@ import { DisplayCommentsWrapper, DisplayWindow } from "./Comments.style";
 const DisplayComments = () => {
   const { appContext } = useAppContext();
   const {
+    textAreaRef,
     comments,
     currentUser,
     postCommentHandler,
@@ -14,12 +15,14 @@ const DisplayComments = () => {
     deleteCommentHandler,
     updateCommentCountHandler,
     replyCommentHandler,
+    replyingToCommentId,
   } = appContext || {};
 
   return (
     <DisplayCommentsWrapper>
       <DisplayWindow>
         <Comments
+          textAreaRef={textAreaRef}
           currentUser={currentUser}
           comments={comments}
           editCommentHandler={editCommentHandler}
@@ -27,8 +30,14 @@ const DisplayComments = () => {
           updateCommentCountHandler={updateCommentCountHandler}
           postCommentHandler={postCommentHandler}
           replyCommentHandler={replyCommentHandler}
+          replyingToCommentId={replyingToCommentId}
         />
-        <AddComment showAvatar={true} actionHandler={postCommentHandler} />
+        <AddComment
+          showAvatar={true}
+          actionHandler={postCommentHandler}
+          textAreaRef={textAreaRef}
+          content=""
+        />
       </DisplayWindow>
     </DisplayCommentsWrapper>
   );

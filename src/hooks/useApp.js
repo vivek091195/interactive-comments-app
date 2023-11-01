@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import constate from "constate";
 import Data from "../data/comments.json";
 import { USER_STORAGE_KEY, COMMENTS_STORAGE_KEY } from "../utils/constants";
@@ -11,12 +11,14 @@ import {
 const MAX_ID = 10000;
 const commentIds = [];
 const useApp = () => {
+  const textAreaRef = useRef(null);
   const [currentUser, setCurrentUser] = useState({
     username: "",
     avatar: "",
   });
   const [comments, setComments] = useState([]);
   const [isEditActive, setIsEditActive] = useState(false);
+  const [replyingToCommentId, setReplyingToCommentId] = useState();
 
   const sortAndStoreComments = (comments) => {
     comments.sort((comment1, comment2) => comment2.score - comment1.score);
@@ -78,25 +80,28 @@ const useApp = () => {
   };
 
   const editCommentHandler = (content, id) => {
-    const commentsCopy = JSON.parse(JSON.stringify(comments));
     setIsEditActive(false);
+    setReplyingToCommentId(-1);
+
+    const commentsCopy = JSON.parse(JSON.stringify(comments));
     const comment = getCommentById(commentsCopy, id);
     comment.content = content;
     sortAndStoreComments([...commentsCopy]);
   };
 
   const replyCommentHandler = (id, replyingTo) => {
+    const randomId = generateRandomId();
+    setReplyingToCommentId(randomId);
     const commentsCopy = JSON.parse(JSON.stringify(comments)); // better replace with deepClone from lodash
     const parentComment = getParentComment(commentsCopy, id);
     parentComment.replies = [
       ...parentComment.replies,
       {
-        id: generateRandomId(),
-        content: "",
+        id: randomId,
+        content: `@${replyingTo} `,
         createdAt: new Date(),
         score: 0,
         user: currentUser,
-        replyingTo,
       },
     ];
     sortAndStoreComments([...commentsCopy]);
@@ -128,6 +133,7 @@ const useApp = () => {
       },
     ];
 
+    textAreaRef.current.value = "";
     sortAndStoreComments(updatedComments);
   };
 
@@ -160,6 +166,7 @@ const useApp = () => {
 
   return {
     appContext: {
+      textAreaRef,
       comments,
       setComments,
       currentUser,
@@ -171,6 +178,7 @@ const useApp = () => {
       isEditActive,
       setIsEditActive,
       replyCommentHandler,
+      replyingToCommentId,
     },
   };
 };

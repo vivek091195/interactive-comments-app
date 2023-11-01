@@ -22,6 +22,7 @@ import {
 import { getFormattedDateString } from "../../utils/helperMethods";
 
 const Comment = ({
+  textAreaRef,
   comment,
   avatar,
   postedByMe,
@@ -30,6 +31,7 @@ const Comment = ({
   updateCommentCountHandler,
   postCommentHandler,
   replyCommentHandler,
+  isReplyingComment,
 }) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const { id, content, createdAt, score, user, replyingTo } = comment;
@@ -41,11 +43,12 @@ const Comment = ({
   };
 
   const _renderCommentContent = () => {
-    return isEditActive ? (
+    return isEditActive || isReplyingComment ? (
       <AddComment
         id={id}
         content={content}
         actionHandler={commentSaveHandler}
+        textAreaRef={textAreaRef}
       />
     ) : (
       <CommentContent>
@@ -120,12 +123,15 @@ Comment.propTypes = {
   editCommentHandler: PropTypes.func,
   deleteCommentHandler: PropTypes.func,
   updateCommentCountHandler: PropTypes.func,
+  replyCommentHandler: PropTypes.func,
+  isReplyingComment: PropTypes.bool,
 };
 
 Comment.defaultProps = {
   postedByMe: false,
   replyingTo: "",
   replies: [],
+  isReplyingComment: false,
 };
 
 export { Comment };

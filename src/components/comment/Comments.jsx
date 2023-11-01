@@ -5,6 +5,7 @@ import { Comment } from "./Comment";
 import { CommentSpacer, NestedComment } from "./Comments.style";
 
 const Comments = ({
+  textAreaRef,
   currentUser,
   comments,
   editCommentHandler,
@@ -12,13 +13,15 @@ const Comments = ({
   updateCommentCountHandler,
   postCommentHandler,
   replyCommentHandler,
+  replyingToCommentId,
 }) => {
   const { avatar, username } = currentUser;
 
-  const _renderSingleComment = (comment, user) => {
+  const _renderSingleComment = (comment, user, id) => {
     return (
       <Card>
         <Comment
+          textAreaRef={textAreaRef}
           comment={comment}
           postedByMe={username === user.username}
           avatar={require(`../../assets/avatars/image-juliusomo.png`)}
@@ -27,6 +30,7 @@ const Comments = ({
           updateCommentCountHandler={updateCommentCountHandler}
           postCommentHandler={postCommentHandler}
           replyCommentHandler={replyCommentHandler}
+          isReplyingComment={id === replyingToCommentId}
         />
       </Card>
     );
@@ -38,11 +42,14 @@ const Comments = ({
         <CommentSpacer></CommentSpacer>
         <div style={{ width: "100%" }}>
           <Comments
+            textAreaRef={textAreaRef}
             currentUser={currentUser}
             comments={replies}
+            editCommentHandler={editCommentHandler}
             deleteCommentHandler={deleteCommentHandler}
             updateCommentCountHandler={updateCommentCountHandler}
             replyCommentHandler={replyCommentHandler}
+            replyingToCommentId={replyingToCommentId}
           />
         </div>
       </NestedComment>
@@ -50,10 +57,10 @@ const Comments = ({
   };
 
   return comments.map((comment) => {
-    const { user, replies = [] } = comment;
+    const { id, user, replies = [] } = comment;
 
     let renderJSX = [];
-    renderJSX.push(_renderSingleComment(comment, user));
+    renderJSX.push(_renderSingleComment(comment, user, id));
 
     if (replies.length) {
       renderJSX.push(_renderNestedComment(replies));
@@ -70,6 +77,8 @@ Comments.propTypes = {
   deleteCommentHandler: PropTypes.func,
   updateCommentCountHandler: PropTypes.func,
   postCommentHandler: PropTypes.func,
+  replyCommentHandler: PropTypes.func,
+  replyingToCommentId: PropTypes.number,
 };
 
 Comments.defaultProps = {

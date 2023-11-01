@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Avatar } from "./Avatar";
-import { COLORS } from "../../typography/colors";
 import { Card } from "../card/Card";
 import {
   AddCommentTextArea,
@@ -13,8 +12,10 @@ const AddComment = ({
   showAvatar = false,
   content = "",
   actionHandler,
+  textAreaRef,
 }) => {
   const [comment, setComment] = useState(content);
+  debugger;
 
   const onCommentChangeHandler = (event) => {
     setComment(event.target.value);
@@ -36,6 +37,7 @@ const AddComment = ({
           />
         )}
         <AddCommentTextArea
+          ref={textAreaRef}
           id="add-comment-textarea"
           name="add-comment"
           rows="4"
@@ -43,7 +45,7 @@ const AddComment = ({
           value={comment}
           onChange={onCommentChangeHandler}
           placeholder="Add a comment..."
-        ></AddCommentTextArea>
+        />
         <SendButton onClick={sendBtnClickHandler}>Send</SendButton>
       </AddCommentWrapper>
     </Card>
