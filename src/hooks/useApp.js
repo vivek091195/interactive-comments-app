@@ -52,22 +52,54 @@ const useApp = () => {
     }
   };
 
+  const getParentComment = (comments, id) => {
+    for (let i = 0; i < comments.length; i++) {
+      let comment = comments[i];
+      if (
+        comment.id === id ||
+        comment.replies.find((nestedComment) => nestedComment.id === id)
+      ) {
+        return comment;
+      }
+    }
+  };
+
   const updateCommentCountHandler = (id, count) => {
-    const comment = getCommentById(comments, id);
+    const commentsCopy = JSON.parse(JSON.stringify(comments));
+    const comment = getCommentById(commentsCopy, id);
     comment.score = count;
-    sortAndStoreComments([...comments]);
+    sortAndStoreComments([...commentsCopy]);
   };
 
   const deleteCommentHandler = (id) => {
-    getCommentById(comments, id, true);
-    sortAndStoreComments([...comments]);
+    const commentsCopy = JSON.parse(JSON.stringify(comments));
+    getCommentById(commentsCopy, id, true);
+    sortAndStoreComments([...commentsCopy]);
   };
 
   const editCommentHandler = (content, id) => {
+    const commentsCopy = JSON.parse(JSON.stringify(comments));
     setIsEditActive(false);
-    const comment = getCommentById(comments, id);
+    const comment = getCommentById(commentsCopy, id);
     comment.content = content;
-    sortAndStoreComments([...comments]);
+    sortAndStoreComments([...commentsCopy]);
+  };
+
+  const replyCommentHandler = (id, replyingTo) => {
+    const commentsCopy = JSON.parse(JSON.stringify(comments)); // better replace with deepClone from lodash
+    const parentComment = getParentComment(commentsCopy, id);
+    parentComment.replies = [
+      ...parentComment.replies,
+      {
+        id: generateRandomId(),
+        content: "",
+        createdAt: new Date(),
+        score: 0,
+        user: currentUser,
+        replyingTo,
+      },
+    ];
+    sortAndStoreComments([...commentsCopy]);
   };
 
   const generateRandomId = () => {
@@ -84,7 +116,7 @@ const useApp = () => {
       {
         id: generateRandomId(),
         content: addedComment,
-        createdAt: "1 month ago",
+        createdAt: new Date(),
         score: 0,
         user: {
           image: {
@@ -138,6 +170,7 @@ const useApp = () => {
       postCommentHandler,
       isEditActive,
       setIsEditActive,
+      replyCommentHandler,
     },
   };
 };

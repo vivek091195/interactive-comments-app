@@ -11,6 +11,7 @@ const Comments = ({
   deleteCommentHandler,
   updateCommentCountHandler,
   postCommentHandler,
+  replyCommentHandler,
 }) => {
   const { avatar, username } = currentUser;
 
@@ -25,6 +26,7 @@ const Comments = ({
           deleteCommentHandler={deleteCommentHandler}
           updateCommentCountHandler={updateCommentCountHandler}
           postCommentHandler={postCommentHandler}
+          replyCommentHandler={replyCommentHandler}
         />
       </Card>
     );
@@ -34,12 +36,13 @@ const Comments = ({
     return (
       <NestedComment>
         <CommentSpacer></CommentSpacer>
-        <div>
+        <div style={{ width: "100%" }}>
           <Comments
             currentUser={currentUser}
             comments={replies}
             deleteCommentHandler={deleteCommentHandler}
             updateCommentCountHandler={updateCommentCountHandler}
+            replyCommentHandler={replyCommentHandler}
           />
         </div>
       </NestedComment>

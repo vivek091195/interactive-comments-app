@@ -19,6 +19,7 @@ import {
   CommentReplyingTo,
   CommentSelfTag,
 } from "./Comments.style";
+import { getFormattedDateString } from "../../utils/helperMethods";
 
 const Comment = ({
   comment,
@@ -28,9 +29,11 @@ const Comment = ({
   deleteCommentHandler,
   updateCommentCountHandler,
   postCommentHandler,
+  replyCommentHandler,
 }) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const { id, content, createdAt, score, user, replyingTo } = comment;
+  const formattedDateString = getFormattedDateString(createdAt);
 
   const commentSaveHandler = (content, id) => {
     setIsEditActive(false);
@@ -75,7 +78,7 @@ const Comment = ({
             </CommentDetail>
             {postedByMe && <CommentSelfTag>you</CommentSelfTag>}
             <CommentDetail color={COLORS.GRAYISH_BLUE} fontWeight={500}>
-              {createdAt}
+              {formattedDateString || createdAt}
             </CommentDetail>
           </CommentHeaderLeftSection>
           {postedByMe ? (
@@ -94,7 +97,9 @@ const Comment = ({
               </CommentActionWrapper>
             </CommentHeaderRightSection>
           ) : (
-            <CommentActionWrapper>
+            <CommentActionWrapper
+              onClick={() => replyCommentHandler(id, user.username)}
+            >
               <ReplySvg />
               <CommentActionText color={COLORS.MODERATE_BLUE}>
                 Reply

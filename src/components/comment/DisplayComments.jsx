@@ -13,6 +13,7 @@ const DisplayComments = () => {
     editCommentHandler,
     deleteCommentHandler,
     updateCommentCountHandler,
+    replyCommentHandler,
   } = appContext || {};
 
   return (
@@ -25,6 +26,7 @@ const DisplayComments = () => {
           deleteCommentHandler={deleteCommentHandler}
           updateCommentCountHandler={updateCommentCountHandler}
           postCommentHandler={postCommentHandler}
+          replyCommentHandler={replyCommentHandler}
         />
         <AddComment showAvatar={true} actionHandler={postCommentHandler} />
       </DisplayWindow>
