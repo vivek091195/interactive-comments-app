@@ -22,16 +22,14 @@ import {
 import { getFormattedDateString } from "../../utils/helperMethods";
 
 const Comment = ({
-  textAreaRef,
   comment,
   avatar,
   postedByMe,
   editCommentHandler,
-  deleteCommentHandler,
   updateCommentCountHandler,
-  postCommentHandler,
   replyCommentHandler,
   isReplyingComment,
+  setDeleteCommentId,
 }) => {
   const [isEditActive, setIsEditActive] = useState(false);
   const { id, content, createdAt, score, user, replyingTo } = comment;
@@ -48,7 +46,7 @@ const Comment = ({
         id={id}
         content={content}
         actionHandler={commentSaveHandler}
-        textAreaRef={textAreaRef}
+        btnText={isEditActive ? "Edit" : "Reply"}
       />
     ) : (
       <CommentContent>
@@ -92,7 +90,7 @@ const Comment = ({
                   Edit
                 </CommentActionText>
               </CommentActionWrapper>
-              <CommentActionWrapper onClick={() => deleteCommentHandler(id)}>
+              <CommentActionWrapper onClick={() => setDeleteCommentId(id)}>
                 <DeleteSvg />
                 <CommentActionText color={COLORS.SOFT_RED}>
                   Delete
@@ -125,6 +123,7 @@ Comment.propTypes = {
   updateCommentCountHandler: PropTypes.func,
   replyCommentHandler: PropTypes.func,
   isReplyingComment: PropTypes.bool,
+  setDeleteCommentId: PropTypes.func,
 };
 
 Comment.defaultProps = {

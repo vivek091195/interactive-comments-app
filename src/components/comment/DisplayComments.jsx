@@ -3,13 +3,16 @@ import { Comments } from "./Comments";
 import { AddComment } from "./AddComment";
 import { useAppContext } from "../../hooks/useApp";
 import { DisplayCommentsWrapper, DisplayWindow } from "./Comments.style";
+import { Modal } from "../modal/Modal";
+import { DeleteModal } from "../modal/DeleteModal";
 
 const DisplayComments = () => {
   const { appContext } = useAppContext();
   const {
-    textAreaRef,
     comments,
     currentUser,
+    deleteCommentId,
+    setDeleteCommentId,
     postCommentHandler,
     editCommentHandler,
     deleteCommentHandler,
@@ -22,23 +25,29 @@ const DisplayComments = () => {
     <DisplayCommentsWrapper>
       <DisplayWindow>
         <Comments
-          textAreaRef={textAreaRef}
           currentUser={currentUser}
           comments={comments}
           editCommentHandler={editCommentHandler}
-          deleteCommentHandler={deleteCommentHandler}
           updateCommentCountHandler={updateCommentCountHandler}
-          postCommentHandler={postCommentHandler}
           replyCommentHandler={replyCommentHandler}
           replyingToCommentId={replyingToCommentId}
+          setDeleteCommentId={setDeleteCommentId}
         />
         <AddComment
           showAvatar={true}
           actionHandler={postCommentHandler}
-          textAreaRef={textAreaRef}
           content=""
         />
       </DisplayWindow>
+      {deleteCommentId && (
+        <Modal>
+          <DeleteModal
+            deleteCommentId={deleteCommentId}
+            deleteCommentHandler={deleteCommentHandler}
+            setDeleteCommentId={setDeleteCommentId}
+          />
+        </Modal>
+      )}
     </DisplayCommentsWrapper>
   );
 };

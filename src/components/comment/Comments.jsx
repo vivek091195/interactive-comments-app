@@ -5,15 +5,13 @@ import { Comment } from "./Comment";
 import { CommentSpacer, NestedComment } from "./Comments.style";
 
 const Comments = ({
-  textAreaRef,
   currentUser,
   comments,
   editCommentHandler,
-  deleteCommentHandler,
   updateCommentCountHandler,
-  postCommentHandler,
   replyCommentHandler,
   replyingToCommentId,
+  setDeleteCommentId,
 }) => {
   const { avatar, username } = currentUser;
 
@@ -21,16 +19,14 @@ const Comments = ({
     return (
       <Card>
         <Comment
-          textAreaRef={textAreaRef}
           comment={comment}
           postedByMe={username === user.username}
           avatar={require(`../../assets/avatars/image-juliusomo.png`)}
           editCommentHandler={editCommentHandler}
-          deleteCommentHandler={deleteCommentHandler}
           updateCommentCountHandler={updateCommentCountHandler}
-          postCommentHandler={postCommentHandler}
           replyCommentHandler={replyCommentHandler}
           isReplyingComment={id === replyingToCommentId}
+          setDeleteCommentId={setDeleteCommentId}
         />
       </Card>
     );
@@ -42,14 +38,13 @@ const Comments = ({
         <CommentSpacer></CommentSpacer>
         <div style={{ width: "100%" }}>
           <Comments
-            textAreaRef={textAreaRef}
             currentUser={currentUser}
             comments={replies}
             editCommentHandler={editCommentHandler}
-            deleteCommentHandler={deleteCommentHandler}
             updateCommentCountHandler={updateCommentCountHandler}
             replyCommentHandler={replyCommentHandler}
             replyingToCommentId={replyingToCommentId}
+            setDeleteCommentId={setDeleteCommentId}
           />
         </div>
       </NestedComment>
@@ -74,11 +69,10 @@ Comments.propTypes = {
   currentUser: PropTypes.object,
   comments: PropTypes.array,
   editCommentHandler: PropTypes.func,
-  deleteCommentHandler: PropTypes.func,
   updateCommentCountHandler: PropTypes.func,
-  postCommentHandler: PropTypes.func,
   replyCommentHandler: PropTypes.func,
   replyingToCommentId: PropTypes.number,
+  setDeleteCommentId: PropTypes.func,
 };
 
 Comments.defaultProps = {

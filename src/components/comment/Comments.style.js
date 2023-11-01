@@ -70,6 +70,9 @@ const CommentDetail = styled.div`
 
 const CommentActionWrapper = styled.div`
   cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
 const CommentActionText = styled.span`
@@ -106,6 +109,10 @@ const AddCommentTextArea = styled.textarea`
   margin: 0 15px;
   border-color: ${COLORS.LIGHT_GRAY};
   color: ${COLORS.GRAYISH_BLUE};
+  cursor: pointer;
+  &:focus {
+    border-color: ${COLORS.DARK_BLUE};
+  }
 `;
 
 const SendButton = styled.button`
@@ -119,6 +126,9 @@ const SendButton = styled.button`
   cursor: pointer;
   color: #fff;
   background-color: ${COLORS.MODERATE_BLUE};
+  &:hover {
+    background: ${COLORS.LIGHT_GRAYISH_BLUE};
+  }
 `;
 
 export {

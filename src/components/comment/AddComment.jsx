@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Proptypes from "prop-types";
 import { Avatar } from "./Avatar";
 import { Card } from "../card/Card";
 import {
@@ -12,10 +13,9 @@ const AddComment = ({
   showAvatar = false,
   content = "",
   actionHandler,
-  textAreaRef,
+  btnText,
 }) => {
   const [comment, setComment] = useState(content);
-  debugger;
 
   const onCommentChangeHandler = (event) => {
     setComment(event.target.value);
@@ -26,7 +26,7 @@ const AddComment = ({
   };
 
   return (
-    <Card>
+    <Card noMargin={content !== ""} noPadding={content !== ""}>
       <AddCommentWrapper>
         {showAvatar && (
           <Avatar
@@ -37,7 +37,6 @@ const AddComment = ({
           />
         )}
         <AddCommentTextArea
-          ref={textAreaRef}
           id="add-comment-textarea"
           name="add-comment"
           rows="4"
@@ -46,10 +45,24 @@ const AddComment = ({
           onChange={onCommentChangeHandler}
           placeholder="Add a comment..."
         />
-        <SendButton onClick={sendBtnClickHandler}>Send</SendButton>
+        <SendButton onClick={sendBtnClickHandler}>{btnText}</SendButton>
       </AddCommentWrapper>
     </Card>
   );
+};
+
+AddComment.propTypes = {
+  id: Proptypes.number,
+  showAvatar: Proptypes.bool,
+  content: Proptypes.string,
+  actionHandler: Proptypes.func,
+  btnText: Proptypes.string,
+};
+
+AddComment.defaultProps = {
+  showAvatar: false,
+  content: "",
+  btnText: "Send",
 };
 
 export { AddComment };

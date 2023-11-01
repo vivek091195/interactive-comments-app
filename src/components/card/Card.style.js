@@ -5,9 +5,9 @@ const CardWrapper = styled.div`
   border-radius: 10px;
   width: 100%;
   height: max-content;
-  padding: 25px 30px;
+  padding: ${(props) => (props.noPadding ? 0 : "25px 30px")};
   display: flex;
-  margin: 20px 0;
+  margin: ${(props) => (props.noMargin ? 0 : "20px 0")};
 `;
 
 export { CardWrapper };

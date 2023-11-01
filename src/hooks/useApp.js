@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import constate from "constate";
 import Data from "../data/comments.json";
 import { USER_STORAGE_KEY, COMMENTS_STORAGE_KEY } from "../utils/constants";
@@ -11,12 +11,12 @@ import {
 const MAX_ID = 10000;
 const commentIds = [];
 const useApp = () => {
-  const textAreaRef = useRef(null);
   const [currentUser, setCurrentUser] = useState({
     username: "",
     avatar: "",
   });
   const [comments, setComments] = useState([]);
+  const [deleteCommentId, setDeleteCommentId] = useState();
   const [isEditActive, setIsEditActive] = useState(false);
   const [replyingToCommentId, setReplyingToCommentId] = useState();
 
@@ -75,6 +75,7 @@ const useApp = () => {
 
   const deleteCommentHandler = (id) => {
     const commentsCopy = JSON.parse(JSON.stringify(comments));
+    setDeleteCommentId(null);
     getCommentById(commentsCopy, id, true);
     sortAndStoreComments([...commentsCopy]);
   };
@@ -132,8 +133,6 @@ const useApp = () => {
         replies: [],
       },
     ];
-
-    textAreaRef.current.value = "";
     sortAndStoreComments(updatedComments);
   };
 
@@ -166,7 +165,6 @@ const useApp = () => {
 
   return {
     appContext: {
-      textAreaRef,
       comments,
       setComments,
       currentUser,
@@ -177,6 +175,8 @@ const useApp = () => {
       postCommentHandler,
       isEditActive,
       setIsEditActive,
+      deleteCommentId,
+      setDeleteCommentId,
       replyCommentHandler,
       replyingToCommentId,
     },
