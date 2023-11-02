@@ -19,7 +19,7 @@ const Vote = ({ id, score, updateCommentCountHandler }) => {
         <PlusSvg />
       </Icon>
       <Score>{score}</Score>
-      <Icon onClick={downVoteHandler}>
+      <Icon onClick={downVoteHandler} height={"120%"}>
         <MinusSvg />
       </Icon>
     </VoteWrapper>

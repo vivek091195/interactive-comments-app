@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { COLORS } from "../../typography/colors";
+import { mobile } from "../../utils/ScreenSizes";
 
 const VoteWrapper = styled.div`
   min-width: 40px;
@@ -11,10 +12,21 @@ const VoteWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: ${COLORS.VERY_LIGHT_GRAY};
+
+  ${mobile(css`
+    width: 90px;
+    flex-direction: row;
+    height: 32px;
+    margin-top: 15px;
+  `)};
 `;
 
 const Icon = styled.div`
   cursor: pointer;
+
+  ${mobile(css`
+    height: ${(props) => props.height || "100%"};
+  `)};
 `;
 
 const Score = styled.div`

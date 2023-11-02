@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { COLORS } from "../../typography/colors";
+import { mobile } from "../../utils/ScreenSizes";
 
 const DisplayCommentsWrapper = styled.div`
   width: 100%;
@@ -9,10 +10,18 @@ const DisplayCommentsWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${COLORS.VERY_LIGHT_GRAY};
+
+  ${mobile(css`
+    padding: 10px;
+  `)};
 `;
 
 const DisplayWindow = styled.div`
   width: 50%;
+
+  ${mobile(css`
+    width: 100%;
+  `)};
 `;
 
 const NestedComment = styled.div`
@@ -29,6 +38,10 @@ const CommentContentWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin-left: 20px;
+
+  ${mobile(css`
+    margin-left: 0;
+  `)};
 `;
 
 const CommentHeaderWrapper = styled.div`
@@ -36,6 +49,10 @@ const CommentHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+
+  ${mobile(css`
+    white-space: nowrap;
+  `)};
 `;
 
 const CommentHeaderLeftSection = styled.div`
@@ -66,6 +83,9 @@ const CommentDetail = styled.div`
       ${customStyles}
     `;
   }}
+  ${mobile(css`
+    font-size: 14px;
+  `)};
 `;
 
 const CommentActionWrapper = styled.div`
@@ -73,6 +93,12 @@ const CommentActionWrapper = styled.div`
   &:hover {
     opacity: 0.5;
   }
+
+  ${mobile(css`
+    position: absolute;
+    bottom: 30px;
+    right: ${(props) => props.positionRight || "0"};
+  `)};
 `;
 
 const CommentActionText = styled.span`

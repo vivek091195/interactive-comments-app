@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { COLORS } from "../../typography/colors";
+import { mobile } from "../../utils/ScreenSizes";
 
 const Overlay = styled.div`
   width: 100%;
@@ -20,6 +21,10 @@ const ModalWrapper = styled.div`
   background: #fff;
   border-radius: 8px;
   padding: 25px;
+
+  ${mobile(css`
+    width: 90%;
+  `)};
 `;
 
 const DeleteModalWrapper = styled.div`
@@ -54,6 +59,11 @@ const Button = styled.button`
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  white-space: nowrap;
+
+  ${mobile(css`
+    padding: 12px 20px;
+  `)};
 `;
 
 export {

@@ -46,7 +46,7 @@ const Comment = ({
         id={id}
         content={content}
         actionHandler={commentSaveHandler}
-        btnText={isEditActive ? "Edit" : "Reply"}
+        btnText={isEditActive ? "Update" : "Reply"}
       />
     ) : (
       <CommentContent>
@@ -82,7 +82,7 @@ const Comment = ({
               {formattedDateString || createdAt}
             </CommentDetail>
           </CommentHeaderLeftSection>
-          {postedByMe ? (
+          {postedByMe && !isReplyingComment && (
             <CommentHeaderRightSection>
               <CommentActionWrapper onClick={() => setIsEditActive(true)}>
                 <EditSvg />
@@ -90,14 +90,18 @@ const Comment = ({
                   Edit
                 </CommentActionText>
               </CommentActionWrapper>
-              <CommentActionWrapper onClick={() => setDeleteCommentId(id)}>
+              <CommentActionWrapper
+                onClick={() => setDeleteCommentId(id)}
+                positionRight={"65px"}
+              >
                 <DeleteSvg />
                 <CommentActionText color={COLORS.SOFT_RED}>
                   Delete
                 </CommentActionText>
               </CommentActionWrapper>
             </CommentHeaderRightSection>
-          ) : (
+          )}
+          {!postedByMe && (
             <CommentActionWrapper
               onClick={() => replyCommentHandler(id, user.username)}
             >
