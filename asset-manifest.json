@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/interactive-comments-app/static/css/main.2647a03f.css",
+    "main.js": "/interactive-comments-app/static/js/main.bba37655.js",
+    "static/js/787.c11c4bf2.chunk.js": "/interactive-comments-app/static/js/787.c11c4bf2.chunk.js",
+    "static/media/Rubik-Bold.ttf": "/interactive-comments-app/static/media/Rubik-Bold.c934eb22c2c69992b34c.ttf",
+    "static/media/Rubik-Medium.ttf": "/interactive-comments-app/static/media/Rubik-Medium.0e121b4fa4d6e9bc5c69.ttf",
+    "static/media/Rubik-Regular.ttf": "/interactive-comments-app/static/media/Rubik-Regular.55fa11cdc8b9a3ee842f.ttf",
+    "index.html": "/interactive-comments-app/index.html",
+    "static/media/plus.svg": "/interactive-comments-app/static/media/plus.0037a825a550965779412c2890bd328b.svg",
+    "static/media/edit.svg": "/interactive-comments-app/static/media/edit.b0c7f9ebaec367bd3ae2539df8b55ff9.svg",
+    "static/media/reply.svg": "/interactive-comments-app/static/media/reply.bfb4589d45cd96abd45e3b82f7e7bbc6.svg",
+    "static/media/minus.svg": "/interactive-comments-app/static/media/minus.4aa6933cb1575b3c54fa67d84a61efaf.svg",
+    "static/media/delete.svg": "/interactive-comments-app/static/media/delete.86cedbf2e37529f9c8f1f744254059b0.svg",
+    "main.2647a03f.css.map": "/interactive-comments-app/static/css/main.2647a03f.css.map",
+    "main.bba37655.js.map": "/interactive-comments-app/static/js/main.bba37655.js.map",
+    "787.c11c4bf2.chunk.js.map": "/interactive-comments-app/static/js/787.c11c4bf2.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2647a03f.css",
+    "static/js/main.bba37655.js"
+  ]
+}
